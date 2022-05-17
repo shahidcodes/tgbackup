@@ -1,0 +1,4 @@
+env
+__pycache__
+upload.txt
+config/*

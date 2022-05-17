@@ -1,3 +1,4 @@
+#!/bin/env python
 import asyncio
 from pyrogram import Client
 import config

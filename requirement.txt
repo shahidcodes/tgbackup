@@ -1,0 +1,8 @@
+autopep8==1.6.0
+pyaes==1.6.1
+pycodestyle==2.8.0
+Pyrogram==2.0.24
+PySocks==1.7.1
+python-dotenv==0.20.0
+TgCrypto==1.2.3
+toml==0.10.2
