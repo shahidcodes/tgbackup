@@ -13,13 +13,22 @@
 
 ### 🏠 [Homepage](shahid.codes)
 
-## Install
+## Environment
+
+```sh
+# get below from https://my.telegram.org/apps
+APP_ID=
+APP_HASH=
+
+```
+
+## Authentication
 
 ```sh
 docker run --rm -it -v `pwd`/config:/app/config python main.py auth
 ```
 
-## Usage
+## Uploading
 
 ```sh
 docker run --rm -it -v /path/to/folder:/data python main.py upload --file /data/file.zip --description "2022-05-18-bitwarden.tar.gz" --channel "-100XXXXXXXX"
