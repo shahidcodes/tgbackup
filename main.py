@@ -1,11 +1,15 @@
 #!/bin/env python
 import asyncio
+import os
 from pyrogram import Client
 import config
 import argparse
+import subprocess
 
 api_id = config.APP_ID
 api_hash = config.APP_HASH
+
+ONE_POINT_NINE_GB = 1.9e+9
 
 
 parser = argparse.ArgumentParser(description="TG Backup")
@@ -30,9 +34,24 @@ async def upload():
         print("Please pass either --channel --me or --username")
         exit(-1)
     target = args.channel or args.me or args.username
+    size = os.path.getsize(args.file)
+    files = []
+    ext = args.file.split('.')[1] or ''
+    if size > ONE_POINT_NINE_GB:
+        subprocess.run(
+            ["split", "-b", "1800m", args.file, "splitted-file"]
+        )
+        for file in os.listdir('.'):
+            if file.find('splitted-file') != -1:
+                files.append(file)
+    else:
+        files.append(args.file)
+
     async with Client("me", api_id, api_hash, workdir=args.config_dir, no_updates=True) as app:
-        await app.send_document(target, args.file, caption=args.description)
-        print("document uploaded")
+        for file in files:
+            await app.send_document(target, file, caption=args.description, file_name=f"{os.path.basename(file)}.{ext}")
+            print("document uploaded")
+            os.remove(file)
 
 
 async def auth():
